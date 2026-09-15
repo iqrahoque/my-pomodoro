@@ -1,0 +1,230 @@
+/* ============================================================
+   MY STUDY TIMER — style.css
+   V0.1 · Foundation (Sakura-inspired default theme)
+   ------------------------------------------------------------
+   All theme colors live in CSS variables at the top, so
+   Phase 3 (Themes / Custom colors) can swap palettes without
+   touching any layout rules below.
+   ============================================================ */
+
+:root {
+  /* Sakura palette */
+  --bg-gradient: linear-gradient(135deg, #fff7f0 0%, #ffe9f0 55%, #ffdfe9 100%);
+  --card: #ffffff;
+  --primary: #f66a8c;
+  --primary-deep: #e0517a;
+  --primary-soft: #ffe3ec;
+  --text: #4a3b42;
+  --muted: #b08e9b;
+  --ring-track: #ffe3ec;
+  --ring-progress: #f66a8c;
+  --shadow: 0 24px 60px -18px rgba(230, 100, 140, 0.35);
+  --blob-1: rgba(255, 154, 183, 0.35);
+  --blob-2: rgba(255, 209, 168, 0.4);
+
+  /* Typography — monospace clock digits so numbers never jump around */
+  --font-ui: "Quicksand", "Nunito", system-ui, sans-serif;
+  --font-clock: "JetBrains Mono", ui-monospace, "SF Mono", monospace;
+
+  --radius-card: 32px;
+  --radius-btn: 999px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { min-height: 100%; }
+
+body {
+  font-family: var(--font-ui);
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
+  overflow-x: hidden;
+}
+
+/* ---------- Floating background blobs ---------- */
+.blob {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(60px);
+  z-index: 0;
+  animation: drift 14s ease-in-out infinite alternate;
+}
+.blob-a { width: 340px; height: 340px; background: var(--blob-1); top: -80px; left: -60px; }
+.blob-b { width: 300px; height: 300px; background: var(--blob-2); bottom: -70px; right: -50px; animation-delay: -7s; }
+
+@keyframes drift {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(30px, 24px, 0) scale(1.08); }
+}
+
+/* ---------- Layout ---------- */
+.app {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 460px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
+
+/* ---------- Brand ---------- */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.brand h1 {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  padding-left: 0.35em; /* optical centering vs. letter-spacing */
+  color: var(--muted);
+}
+.brand-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--primary);
+  opacity: 0.7;
+}
+
+/* ---------- Timer card ---------- */
+.timer-card {
+  width: 100%;
+  background: var(--card);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow);
+  padding: 40px 36px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  text-align: center;
+}
+
+.mode-label {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.4em;
+  padding-left: 0.4em;
+  color: var(--primary);
+}
+
+/* ---------- Progress ring + digits ---------- */
+.timer-visual {
+  position: relative;
+  width: min(76vw, 300px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+}
+
+.progress-ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+.progress-ring circle {
+  fill: none;
+  stroke-width: 12;
+}
+.ring-track { stroke: var(--ring-track); }
+.ring-progress {
+  stroke: var(--ring-progress);
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.25s linear;
+}
+
+.time-display {
+  font-family: var(--font-clock);
+  font-size: clamp(56px, 17vw, 76px);
+  font-weight: 700;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+/* ---------- Controls ---------- */
+.controls {
+  display: flex;
+  gap: 14px;
+}
+
+.btn {
+  font-family: var(--font-ui);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  border: none;
+  border-radius: var(--radius-btn);
+  padding: 15px 34px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease,
+    color 0.2s ease, border-color 0.2s ease;
+}
+.btn:active { transform: scale(0.96); }
+.btn:focus-visible { outline: 3px solid var(--primary-soft); outline-offset: 2px; }
+
+.btn-primary {
+  color: #fff;
+  background: linear-gradient(135deg, var(--primary), var(--primary-deep));
+  box-shadow: 0 12px 26px -10px rgba(240, 90, 130, 0.6);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 30px -10px rgba(240, 90, 130, 0.7);
+}
+
+.btn-ghost {
+  color: var(--muted);
+  background: transparent;
+  border: 2px solid #f3d9e0;
+}
+.btn-ghost:hover { color: var(--primary-deep); border-color: var(--primary); }
+
+/* ---------- Hints & footer ---------- */
+.hint {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.6;
+  max-width: 34ch;
+}
+
+.footer p {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  opacity: 0.75;
+}
+
+/* ---------- Completed state (breaks arrive in Phase 2) ---------- */
+.timer-card.done { animation: celebrate 0.6s ease; }
+.timer-card.done .time-display { color: var(--primary-deep); }
+
+@keyframes celebrate {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+/* ---------- Responsive & motion preferences ---------- */
+@media (max-width: 420px) {
+  .timer-card { padding: 32px 22px 26px; }
+  .btn { padding: 14px 26px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blob { animation: none; }
+  .ring-progress { transition: none; }
+  .timer-card.done { animation: none; }
+}

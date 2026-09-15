@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Study Timer</title>
+  <meta name="description" content="MY STUDY TIMER — a beautiful Pomodoro study timer. V0.1: a working 25-minute focus timer." />
+  <meta name="theme-color" content="#ffe9f0" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍅</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Soft floating background decoration (pure CSS, see .blob rules) -->
+  <div class="blob blob-a" aria-hidden="true"></div>
+  <div class="blob blob-b" aria-hidden="true"></div>
+
+  <main class="app">
+    <header class="brand">
+      <span class="brand-dot" aria-hidden="true"></span>
+      <h1>MY STUDY TIMER</h1>
+      <span class="brand-dot" aria-hidden="true"></span>
+    </header>
+
+    <section class="timer-card" aria-label="Focus timer">
+      <p class="mode-label" id="mode-label">FOCUS</p>
+
+      <div class="timer-visual">
+        <svg class="progress-ring" viewBox="0 0 320 320" role="img" aria-label="Time remaining progress">
+          <circle class="ring-track" cx="160" cy="160" r="144" />
+          <circle class="ring-progress" id="ring-progress" cx="160" cy="160" r="144" />
+        </svg>
+        <div class="time-display" id="time-display">25:00</div>
+      </div>
+
+      <div class="controls">
+        <button class="btn btn-primary" id="start-btn" type="button">START</button>
+        <button class="btn btn-ghost" id="reset-btn" type="button">RESET</button>
+      </div>
+
+      <p class="hint" id="hint">25 minutes of focused study. You've got this.</p>
+    </section>
+
+    <footer class="footer">
+      <p>v0.1 · Foundation — countdown · start/pause · reset</p>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
