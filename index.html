@@ -1,33 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="sakura" data-font="quicksand" data-clockfont="jetbrains" data-clock="circular" data-animations="on" data-lock="off">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My Study Timer</title>
-  <meta name="description" content="MY STUDY TIMER — a beautiful Pomodoro study timer. V0.1: a working 25-minute focus timer." />
+  <meta name="description" content="MY STUDY TIMER — a Pomodoro study timer with themes, sounds, a focus monitor and a study lock." />
   <meta name="theme-color" content="#ffe9f0" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍅</text></svg>" />
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" />
+  <link rel="apple-touch-icon" href="assets/icons/icon-180.png" />
+  <link rel="manifest" href="manifest.json" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700&family=Inter:wght@500;600;700&family=JetBrains+Mono:wght@600;700&family=Nunito:wght@600;700;800&family=Poppins:wght@500;600;700&family=Quicksand:wght@500;600;700&family=Space+Mono:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/themes.css" />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/components.css" />
 </head>
 <body>
-  <!-- Soft floating background decoration (pure CSS, see .blob rules) -->
   <div class="blob blob-a" aria-hidden="true"></div>
   <div class="blob blob-b" aria-hidden="true"></div>
 
-  <main class="app">
-    <header class="brand">
-      <span class="brand-dot" aria-hidden="true"></span>
-      <h1>MY STUDY TIMER</h1>
-      <span class="brand-dot" aria-hidden="true"></span>
-    </header>
+  <!-- Soft inactivity reminder (Phase 6) -->
+  <div class="reminder-banner" id="reminder-banner" role="status" hidden></div>
 
-    <section class="timer-card" aria-label="Focus timer">
-      <p class="mode-label" id="mode-label">FOCUS</p>
+  <header class="topbar container">
+    <div class="brand"><span class="logo">🍅</span> MY STUDY TIMER</div>
+    <nav class="topbar-actions" aria-label="App actions">
+      <button class="chip" id="reading-btn" aria-pressed="false" title="Less aggressive inactivity monitoring (Phase 6)">📖 Reading mode</button>
+      <button class="icon-btn" id="stats-btn" aria-label="Open statistics" title="Statistics (Phase 9)">📊</button>
+      <a class="icon-btn" href="settings.html" aria-label="Open settings" title="Settings (Phase 5)">⚙️</a>
+    </nav>
+  </header>
 
-      <div class="timer-visual">
+  <main class="container app">
+    <section class="timer-card" id="timer-card" aria-label="Study timer">
+      <div class="phase-row">
+        <p class="mode-label" id="mode-label">FOCUS</p>
+        <div class="session-dots" id="session-dots" aria-label="Focus sessions completed in this cycle"></div>
+      </div>
+
+      <div class="timer-visual" id="timer-visual">
         <svg class="progress-ring" viewBox="0 0 320 320" role="img" aria-label="Time remaining progress">
           <circle class="ring-track" cx="160" cy="160" r="144" />
           <circle class="ring-progress" id="ring-progress" cx="160" cy="160" r="144" />
@@ -35,19 +47,150 @@
         <div class="time-display" id="time-display">25:00</div>
       </div>
 
+      <div class="flip-clock" id="flip-clock" aria-hidden="true"></div>
+
+      <div class="bar-clock" id="bar-clock" aria-hidden="true">
+        <div class="bar-track"><div class="bar-fill" id="bar-fill"></div></div>
+      </div>
+
+      <p class="task-line" id="task-line" hidden></p>
+
       <div class="controls">
         <button class="btn btn-primary" id="start-btn" type="button">START</button>
         <button class="btn btn-ghost" id="reset-btn" type="button">RESET</button>
+        <button class="btn btn-ghost" id="skip-btn" type="button">SKIP</button>
       </div>
 
-      <p class="hint" id="hint">25 minutes of focused study. You've got this.</p>
-    </section>
+      <p class="hint" id="hint">Press START and tell the timer what you're working on.</p>
 
-    <footer class="footer">
-      <p>v0.1 · Foundation — countdown · start/pause · reset</p>
-    </footer>
+      <div class="lock-badge" id="lock-badge" hidden>🔒 STUDY LOCK ACTIVE</div>
+    </section>
   </main>
 
-  <script src="script.js"></script>
+  <footer class="footer container">
+    <p>v1.0 · all 10 phases · <button type="button" id="shortcuts-btn">keyboard shortcuts</button></p>
+  </footer>
+
+  <!-- ===== Session setup ("I am studying…" mode) ===== -->
+  <div class="modal-overlay" id="setup-modal" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="setup-title">
+      <h2 id="setup-title">WHAT ARE YOU WORKING ON?</h2>
+      <input type="text" id="setup-task" placeholder="DSA Assignment" maxlength="60" autocomplete="off" />
+
+      <div class="field-row">
+        <div class="field-stack">
+          <label for="setup-preset">Duration</label>
+        </div>
+        <select id="setup-preset">
+          <option value="25/5" selected>25 / 5 — classic</option>
+          <option value="50/10">50 / 10 — deep study</option>
+          <option value="45/15">45 / 15 — lecture / coding</option>
+          <option value="90/20">90 / 20 — deep work</option>
+          <option value="custom">Custom…</option>
+        </select>
+      </div>
+
+      <div class="grid2" id="setup-custom" hidden>
+        <div class="field-stack"><label for="setup-focus">Focus (min)</label><input type="number" id="setup-focus" min="1" max="180" value="25" /></div>
+        <div class="field-stack"><label for="setup-short">Short break</label><input type="number" id="setup-short" min="1" max="60" value="5" /></div>
+        <div class="field-stack"><label for="setup-long">Long break</label><input type="number" id="setup-long" min="1" max="90" value="15" /></div>
+        <div class="field-stack"><label for="setup-cycle">Long break after</label><input type="number" id="setup-cycle" min="2" max="12" value="4" /></div>
+      </div>
+
+      <div class="grid2">
+        <div class="field-stack">
+          <label for="setup-theme">Theme</label>
+          <select id="setup-theme"></select>
+        </div>
+        <div class="field-stack">
+          <label for="setup-clock">Clock</label>
+          <select id="setup-clock">
+            <option value="circular" selected>Circular</option>
+            <option value="digital">Digital</option>
+            <option value="minimal">Minimal</option>
+            <option value="flip">Flip</option>
+            <option value="bar">Progress bar</option>
+            <option value="large">Large fullscreen</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field-stack">
+          <label for="setup-lock">🔒 Study Lock</label>
+          <span class="desc">Blocks distracting sites while you focus</span>
+        </div>
+        <select id="setup-lock">
+          <option value="off" selected>Off</option>
+          <option value="gentle">Gentle — warn me</option>
+          <option value="strict">Strict — redirect me</option>
+          <option value="hardcore">Hardcore — no escape</option>
+        </select>
+      </div>
+
+      <button class="btn btn-primary btn-lg" id="setup-start" type="button">START FOCUS</button>
+      <button class="btn btn-ghost" id="setup-cancel" type="button">Cancel</button>
+    </div>
+  </div>
+
+  <!-- ===== Session summary ===== -->
+  <div class="modal-overlay" id="summary-modal" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="summary-title">
+      <div class="summary-check" id="summary-check">🎉</div>
+      <h2 id="summary-title">SESSION COMPLETE</h2>
+      <p class="summary-task" id="summary-task">DSA Assignment</p>
+      <div class="summary-rows" id="summary-rows"></div>
+      <button class="btn btn-primary btn-lg" id="summary-break-btn" type="button">START BREAK</button>
+      <button class="btn btn-ghost" id="summary-close" type="button">Close</button>
+    </div>
+  </div>
+
+  <!-- ===== Keyboard shortcuts (Phase 10) ===== -->
+  <div class="modal-overlay" id="help-modal" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="help-title">
+      <h2 id="help-title">KEYBOARD SHORTCUTS</h2>
+      <div class="keys-grid">
+        <kbd>Space</kbd><span>Start / pause</span>
+        <kbd>R</kbd><span>Reset</span>
+        <kbd>S</kbd><span>Skip phase</span>
+        <kbd>F</kbd><span>Fullscreen timer</span>
+        <kbd>M</kbd><span>Toggle reading mode</span>
+        <kbd>?</kbd><span>Show this help</span>
+        <kbd>Esc</kbd><span>Close dialogs</span>
+      </div>
+      <button class="btn btn-primary" id="help-close" type="button">Got it</button>
+    </div>
+  </div>
+
+  <!-- ===== Stats drawer (Phase 9) ===== -->
+  <aside class="drawer" id="stats-drawer" aria-label="Statistics" hidden>
+    <div class="drawer-head">
+      <h2>STATISTICS</h2>
+      <button class="icon-btn" id="stats-close" aria-label="Close statistics">✕</button>
+    </div>
+    <div class="stat-block">
+      <h3>TODAY</h3>
+      <div class="stat-grid" id="stats-today"></div>
+    </div>
+    <div class="stat-block">
+      <h3>THIS WEEK</h3>
+      <div class="week-chart" id="stats-week"></div>
+    </div>
+    <div class="stat-block">
+      <h3>RECENT SESSIONS</h3>
+      <div class="history-list" id="stats-history"></div>
+    </div>
+  </aside>
+
+  <div class="toast" id="toast" hidden></div>
+
+  <!-- Classic scripts (not modules) so the app also works from file:// -->
+  <script src="js/storage.js"></script>
+  <script src="js/themes.js"></script>
+  <script src="js/sounds.js"></script>
+  <script src="js/activity.js"></script>
+  <script src="js/stats.js"></script>
+  <script src="js/timer.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>

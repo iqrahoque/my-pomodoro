@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <header>
+    <span class="logo">🍅</span>
+    <div>
+      <h1>MY STUDY TIMER</h1>
+      <p class="sub">Study Lock control</p>
+    </div>
+  </header>
+
+  <section id="state-card" class="card idle">
+    <p class="state-title" id="state-title">NO ACTIVE SESSION</p>
+    <p class="count" id="count">--:--</p>
+    <p class="meta" id="state-meta">Navigate freely</p>
+  </section>
+
+  <section class="card plain" id="start-card">
+    <div class="row">
+      <label for="q-task">Quick session</label>
+      <input type="text" id="q-task" placeholder="What are you working on?" maxlength="60" />
+    </div>
+    <div class="row split">
+      <select id="q-min">
+        <option value="25" selected>25 min</option>
+        <option value="50">50 min</option>
+        <option value="45">45 min</option>
+        <option value="90">90 min</option>
+      </select>
+      <select id="q-mode">
+        <option value="strict" selected>Strict</option>
+        <option value="gentle">Gentle</option>
+        <option value="hardcore">Hardcore</option>
+      </select>
+    </div>
+    <button id="q-start" class="primary" type="button">START LOCKED SESSION</button>
+  </section>
+
+  <section class="card plain">
+    <button id="stop-btn" class="danger" type="button">STOP SESSION</button>
+    <p class="hint" id="hardcore-hint" hidden>Hardcore mode: the dashboard can't stop this. This popup can, and it counts as an emergency stop.</p>
+  </section>
+
+  <section class="card plain">
+    <button id="allow-current" class="ghost" type="button">✓ Allow current site</button>
+    <p class="hint">Adds the active tab's domain to this extension's allowlist (used when you start sessions from the popup).</p>
+  </section>
+
+  <footer>
+    <a id="dash-link" href="https://iqrahoque.github.io/my-pomodoro/" target="_blank" rel="noopener">Open dashboard ↗</a>
+    <span id="pair-hint">Pair with the dashboard: paste this extension's ID in Settings → Study Lock</span>
+  </footer>
+
+  <script src="popup.js"></script>
+</body>
+</html>

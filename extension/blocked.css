@@ -1,0 +1,70 @@
+/* Study Lock blocked page — dark, calm, unavoidable. */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  background: linear-gradient(135deg, #171d31 0%, #1c2340 55%, #232b4d 100%);
+  color: #e9eaf8;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.frame { width: 100%; max-width: 420px; }
+
+.card {
+  background: #272f52;
+  border: 1px solid #3d4577;
+  border-radius: 26px;
+  box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.6);
+  padding: 42px 36px 34px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.lock { font-size: 44px; }
+
+h1 {
+  font-size: 20px;
+  letter-spacing: 0.38em;
+  padding-left: 0.38em;
+  color: #8f7bff;
+}
+
+.msg { font-size: 15.5px; color: #9aa0c8; }
+
+.remaining {
+  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  font-size: 58px;
+  font-weight: 700;
+  color: #f2f2ff;
+  font-variant-numeric: tabular-nums;
+  margin-top: 4px;
+}
+
+.task { font-size: 13.5px; font-weight: 600; color: #9aa0c8; max-width: 32ch; }
+
+.cheer { font-size: 13px; color: #5fd0a0; font-weight: 700; letter-spacing: 0.08em; }
+
+#back-btn {
+  margin-top: 10px;
+  font: 700 13px/1 "Segoe UI", system-ui, sans-serif;
+  letter-spacing: 0.14em;
+  color: #fff;
+  background: linear-gradient(135deg, #8f7bff, #6f58e8);
+  border: none;
+  border-radius: 999px;
+  padding: 15px 34px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+  box-shadow: 0 12px 26px -10px rgba(120, 90, 255, 0.6);
+}
+#back-btn:hover { transform: translateY(-2px); }
+#back-btn:active { transform: scale(0.96); }
+
+.meta { font-size: 11.5px; color: #6d74a5; line-height: 1.7; }

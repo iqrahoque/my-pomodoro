@@ -1,0 +1,277 @@
+/* ============================================================
+   MY STUDY TIMER — themes.css
+   Phase 3 (Personality): preset palettes live on [data-theme].
+   Custom themes (Phase 5) inject the same variables inline on
+   <html>, so nothing here needs to know about them.
+   Dark presets override the blob + shadow colors too.
+   ============================================================ */
+
+/* ---------- 🌸 Sakura (default) ---------- */
+:root,
+[data-theme="sakura"] {
+  --bg-gradient: linear-gradient(135deg, #fff7f0 0%, #ffe9f0 55%, #ffdfe9 100%);
+  --card: #ffffff;
+  --primary: #f66a8c;
+  --primary-deep: #e0517a;
+  --primary-soft: #ffe3ec;
+  --secondary: #d4729a;
+  --text: #4a3b42;
+  --muted: #b08e9b;
+  --ring-track: #ffe3ec;
+  --ring-progress: #f66a8c;
+  --ring-break: #62b98c;
+  --timer-color: #4a3b42;
+  --btn-gradient: linear-gradient(135deg, #f66a8c, #e0517a);
+  --shadow: 0 24px 60px -18px rgba(230, 100, 140, 0.35);
+  --blob-1: rgba(255, 154, 183, 0.35);
+  --blob-2: rgba(255, 209, 168, 0.4);
+  --banner-bg: #fff0f4;
+  --border-soft: #f3d9e0;
+}
+
+/* ---------- 🌿 Matcha ---------- */
+[data-theme="matcha"] {
+  --bg-gradient: linear-gradient(135deg, #f6f8f0 0%, #e9f0e0 55%, #dfe9d2 100%);
+  --card: #fdfefa;
+  --primary: #7a9d54;
+  --primary-deep: #63823f;
+  --primary-soft: #e4eed7;
+  --secondary: #7d8f5e;
+  --text: #3c4433;
+  --muted: #93a184;
+  --ring-track: #e4eed7;
+  --ring-progress: #7a9d54;
+  --ring-break: #c98a4b;
+  --timer-color: #3c4433;
+  --btn-gradient: linear-gradient(135deg, #7a9d54, #63823f);
+  --shadow: 0 24px 60px -18px rgba(110, 140, 80, 0.35);
+  --blob-1: rgba(165, 196, 120, 0.35);
+  --blob-2: rgba(240, 214, 160, 0.4);
+  --banner-bg: #eef4e4;
+  --border-soft: #d9e4c8;
+}
+
+/* ---------- 🌊 Ocean ---------- */
+[data-theme="ocean"] {
+  --bg-gradient: linear-gradient(135deg, #eaf5fb 0%, #d9edf9 55%, #c9e4f6 100%);
+  --card: #fdfeff;
+  --primary: #2f9dd0;
+  --primary-deep: #2180ae;
+  --primary-soft: #d8ecf9;
+  --secondary: #4d7fa8;
+  --text: #2c3e4a;
+  --muted: #8aa7b8;
+  --ring-track: #d8ecf9;
+  --ring-progress: #2f9dd0;
+  --ring-break: #e0a050;
+  --timer-color: #2c3e4a;
+  --btn-gradient: linear-gradient(135deg, #2f9dd0, #2180ae);
+  --shadow: 0 24px 60px -18px rgba(47, 130, 180, 0.35);
+  --blob-1: rgba(120, 190, 230, 0.4);
+  --blob-2: rgba(160, 220, 240, 0.45);
+  --banner-bg: #e6f3fa;
+  --border-soft: #c8e2f0;
+}
+
+/* ---------- 💜 Lavender ---------- */
+[data-theme="lavender"] {
+  --bg-gradient: linear-gradient(135deg, #f5f1fc 0%, #ece4fa 55%, #e2d8f8 100%);
+  --card: #fefeff;
+  --primary: #8b6fd8;
+  --primary-deep: #7157bd;
+  --primary-soft: #e9e2fa;
+  --secondary: #9b7fd0;
+  --text: #403a52;
+  --muted: #a394c2;
+  --ring-track: #e9e2fa;
+  --ring-progress: #8b6fd8;
+  --ring-break: #5fb898;
+  --timer-color: #403a52;
+  --btn-gradient: linear-gradient(135deg, #8b6fd8, #7157bd);
+  --shadow: 0 24px 60px -18px rgba(130, 100, 200, 0.35);
+  --blob-1: rgba(180, 150, 235, 0.4);
+  --blob-2: rgba(230, 180, 235, 0.4);
+  --banner-bg: #f0eafc;
+  --border-soft: #dcd0f0;
+}
+
+/* ---------- ☕ Café ---------- */
+[data-theme="cafe"] {
+  --bg-gradient: linear-gradient(135deg, #f7f1e8 0%, #f0e5d5 55%, #e8d9c3 100%);
+  --card: #fffdf9;
+  --primary: #9a6b4f;
+  --primary-deep: #7d5239;
+  --primary-soft: #ecdfd0;
+  --secondary: #a57b5c;
+  --text: #46362a;
+  --muted: #ab9482;
+  --ring-track: #ecdfd0;
+  --ring-progress: #9a6b4f;
+  --ring-break: #6e8f5a;
+  --timer-color: #46362a;
+  --btn-gradient: linear-gradient(135deg, #9a6b4f, #7d5239);
+  --shadow: 0 24px 60px -18px rgba(140, 100, 70, 0.35);
+  --blob-1: rgba(200, 160, 120, 0.4);
+  --blob-2: rgba(225, 195, 150, 0.45);
+  --banner-bg: #f3ebdf;
+  --border-soft: #e2d2bd;
+}
+
+/* ---------- 🌙 Midnight (dark) ---------- */
+[data-theme="midnight"] {
+  --bg-gradient: linear-gradient(135deg, #171d31 0%, #1c2340 55%, #232b4d 100%);
+  --card: #272f52;
+  --primary: #8f7bff;
+  --primary-deep: #6f58e8;
+  --primary-soft: #3a3f6e;
+  --secondary: #b3a1ff;
+  --text: #e9eaf8;
+  --muted: #9aa0c8;
+  --ring-track: #3a3f6e;
+  --ring-progress: #8f7bff;
+  --ring-break: #5fd0a0;
+  --timer-color: #f2f2ff;
+  --btn-gradient: linear-gradient(135deg, #8f7bff, #6f58e8);
+  --shadow: 0 24px 60px -18px rgba(0, 0, 0, 0.55);
+  --blob-1: rgba(120, 100, 255, 0.22);
+  --blob-2: rgba(80, 200, 255, 0.14);
+  --banner-bg: #2f3760;
+  --border-soft: #3d4577;
+}
+
+/* ---------- 🌅 Sunset ---------- */
+[data-theme="sunset"] {
+  --bg-gradient: linear-gradient(135deg, #fff4ea 0%, #ffe7d4 55%, #ffd8c2 100%);
+  --card: #fffdfb;
+  --primary: #f2795c;
+  --primary-deep: #d95f42;
+  --primary-soft: #ffe3d6;
+  --secondary: #d97a8e;
+  --text: #4d3730;
+  --muted: #b89586;
+  --ring-track: #ffe3d6;
+  --ring-progress: #f2795c;
+  --ring-break: #7fb069;
+  --timer-color: #4d3730;
+  --btn-gradient: linear-gradient(135deg, #f2795c, #d95f42);
+  --shadow: 0 24px 60px -18px rgba(230, 110, 80, 0.35);
+  --blob-1: rgba(255, 160, 120, 0.4);
+  --blob-2: rgba(255, 200, 120, 0.45);
+  --banner-bg: #fff0e6;
+  --border-soft: #f2d4c2;
+}
+
+/* ---------- 🌲 Forest ---------- */
+[data-theme="forest"] {
+  --bg-gradient: linear-gradient(135deg, #f2f6ef 0%, #e5ede0 55%, #d8e4d0 100%);
+  --card: #fcfefb;
+  --primary: #3e7d54;
+  --primary-deep: #2f6442;
+  --primary-soft: #dbe9dc;
+  --secondary: #6b8f5e;
+  --text: #2f3b30;
+  --muted: #8ba08c;
+  --ring-track: #dbe9dc;
+  --ring-progress: #3e7d54;
+  --ring-break: #d0913f;
+  --timer-color: #2f3b30;
+  --btn-gradient: linear-gradient(135deg, #3e7d54, #2f6442);
+  --shadow: 0 24px 60px -18px rgba(60, 110, 75, 0.35);
+  --blob-1: rgba(120, 175, 130, 0.35);
+  --blob-2: rgba(200, 220, 150, 0.4);
+  --banner-bg: #eaf3e8;
+  --border-soft: #cfe0cd;
+}
+
+/* ---------- 🍓 Strawberry ---------- */
+[data-theme="strawberry"] {
+  --bg-gradient: linear-gradient(135deg, #fff1f2 0%, #ffe4e8 55%, #ffd6dc 100%);
+  --card: #fffcfd;
+  --primary: #e64560;
+  --primary-deep: #c72e49;
+  --primary-soft: #ffdadf;
+  --secondary: #d95775;
+  --text: #4d2f35;
+  --muted: #bb8a93;
+  --ring-track: #ffdadf;
+  --ring-progress: #e64560;
+  --ring-break: #58b378;
+  --timer-color: #4d2f35;
+  --btn-gradient: linear-gradient(135deg, #e64560, #c72e49);
+  --shadow: 0 24px 60px -18px rgba(220, 70, 95, 0.35);
+  --blob-1: rgba(255, 130, 150, 0.4);
+  --blob-2: rgba(255, 190, 130, 0.4);
+  --banner-bg: #ffeaec;
+  --border-soft: #f5c8cf;
+}
+
+/* ---------- 🧊 Arctic ---------- */
+[data-theme="arctic"] {
+  --bg-gradient: linear-gradient(135deg, #f2f9fc 0%, #e6f3f9 55%, #daedf6 100%);
+  --card: #ffffff;
+  --primary: #4aa3c7;
+  --primary-deep: #3786a8;
+  --primary-soft: #dcedf6;
+  --secondary: #6f9fc0;
+  --text: #2e3d46;
+  --muted: #8fa9b8;
+  --ring-track: #dcedf6;
+  --ring-progress: #4aa3c7;
+  --ring-break: #7fb6a0;
+  --timer-color: #2e3d46;
+  --btn-gradient: linear-gradient(135deg, #4aa3c7, #3786a8);
+  --shadow: 0 24px 60px -18px rgba(70, 140, 175, 0.32);
+  --blob-1: rgba(150, 210, 235, 0.45);
+  --blob-2: rgba(200, 235, 250, 0.5);
+  --banner-bg: #e9f4f9;
+  --border-soft: #cfe4ef;
+}
+
+/* ---------- 🖥️ Cyber (dark neon) ---------- */
+[data-theme="cyber"] {
+  --bg-gradient: linear-gradient(135deg, #0a0e14 0%, #0c1120 55%, #101733 100%);
+  --card: #131a2b;
+  --primary: #00e5ff;
+  --primary-deep: #00b8d4;
+  --primary-soft: #16283a;
+  --secondary: #ff2bd6;
+  --text: #e6faff;
+  --muted: #5f7f95;
+  --ring-track: #16283a;
+  --ring-progress: #00e5ff;
+  --ring-break: #b6ff00;
+  --timer-color: #ffffff;
+  --btn-gradient: linear-gradient(135deg, #00e5ff, #b626ff);
+  --shadow: 0 24px 60px -12px rgba(0, 229, 255, 0.22);
+  --blob-1: rgba(0, 229, 255, 0.16);
+  --blob-2: rgba(255, 43, 214, 0.14);
+  --banner-bg: #10233a;
+  --border-soft: #1e3a52;
+}
+
+/* ---------- Fonts (Phase 3: custom fonts) ---------- */
+:root,
+[data-font="quicksand"] { --font-ui: "Quicksand", "Nunito", system-ui, sans-serif; }
+[data-font="nunito"]    { --font-ui: "Nunito", "Quicksand", system-ui, sans-serif; }
+[data-font="inter"]     { --font-ui: "Inter", system-ui, sans-serif; }
+[data-font="poppins"]   { --font-ui: "Poppins", system-ui, sans-serif; }
+[data-font="dmsans"]    { --font-ui: "DM Sans", system-ui, sans-serif; }
+
+:root,
+[data-clockfont="jetbrains"] { --font-clock: "JetBrains Mono", ui-monospace, monospace; }
+[data-clockfont="spacemono"]  { --font-clock: "Space Mono", ui-monospace, monospace; }
+
+/* ---------- Animations off (Phase 10 accessibility) ---------- */
+[data-animations="off"] *,
+[data-animations="off"] *::before,
+[data-animations="off"] *::after {
+  animation: none !important;
+  transition: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="sakura" data-font="quicksand" data-clockfont="jetbrains" data-animations="on">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Settings — My Study Timer</title>
+  <meta name="description" content="Settings for My Study Timer — appearance, timer, sound, focus monitor, study lock, behavior." />
+  <meta name="theme-color" content="#ffe9f0" />
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700&family=Inter:wght@500;600;700&family=JetBrains+Mono:wght@600;700&family=Nunito:wght@600;700;800&family=Poppins:wght@500;600;700&family=Quicksand:wght@500;600;700&family=Space+Mono:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/themes.css" />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/components.css" />
+</head>
+<body>
+  <div class="blob blob-a" aria-hidden="true"></div>
+  <div class="blob blob-b" aria-hidden="true"></div>
+
+  <header class="topbar container" style="max-width:560px">
+    <a class="icon-btn" href="index.html" aria-label="Back to timer">←</a>
+    <div class="brand"><span class="logo">⚙️</span> SETTINGS</div>
+    <span style="width:40px"></span>
+  </header>
+
+  <main class="settings-wrap">
+
+    <!-- ================= APPEARANCE ================= -->
+    <section class="settings-card">
+      <h2>APPEARANCE</h2>
+
+      <div class="field-row">
+        <label>Theme<span class="desc">11 presets, or build your own below</span></label>
+        <div class="theme-grid" id="theme-grid" style="max-width:340px"></div>
+      </div>
+
+      <div class="field-row">
+        <div class="field-stack"><label for="set-clock">Clock</label></div>
+        <select id="set-clock">
+          <option value="circular">Circular</option>
+          <option value="digital">Digital</option>
+          <option value="minimal">Minimal</option>
+          <option value="flip">Flip</option>
+          <option value="bar">Progress bar</option>
+          <option value="large">Large fullscreen</option>
+        </select>
+      </div>
+
+      <div class="field-row">
+        <div class="field-stack"><label for="set-font">Font</label></div>
+        <select id="set-font">
+          <option value="quicksand">Quicksand</option>
+          <option value="nunito">Nunito</option>
+          <option value="inter">Inter</option>
+          <option value="poppins">Poppins</option>
+          <option value="dmsans">DM Sans</option>
+        </select>
+      </div>
+
+      <div class="field-row">
+        <div class="field-stack"><label for="set-clockfont">Clock font</label><span class="desc">Monospace so the numbers never jump</span></div>
+        <select id="set-clockfont">
+          <option value="jetbrains">JetBrains Mono</option>
+          <option value="spacemono">Space Mono</option>
+        </select>
+      </div>
+
+      <div class="field-row">
+        <label>Animations<span class="desc">Disable for a calmer, static UI</span></label>
+        <span class="toggle"><input type="checkbox" id="set-animations" /><span class="track"></span></span>
+      </div>
+    </section>
+
+    <!-- ================= CUSTOM THEME BUILDER ================= -->
+    <section class="settings-card">
+      <h2>🎨 CUSTOM THEME</h2>
+      <div class="color-grid">
+        <label>Background</label><input type="color" id="ct-bg" value="#fff7f0" /><span class="hintcell">page</span>
+        <label>Card</label><input type="color" id="ct-card" value="#ffffff" /><span class="hintcell">timer card</span>
+        <label>Primary</label><input type="color" id="ct-primary" value="#f66a8c" /><span class="hintcell">accent</span>
+        <label>Secondary</label><input type="color" id="ct-secondary" value="#d4729a" /><span class="hintcell">labels</span>
+        <label>Text</label><input type="color" id="ct-text" value="#4a3b42" /><span class="hintcell">body</span>
+        <label>Timer</label><input type="color" id="ct-timer" value="#4a3b42" /><span class="hintcell">digits</span>
+        <label>Progress</label><input type="color" id="ct-progress" value="#f66a8c" /><span class="hintcell">ring</span>
+        <label>Buttons</label><input type="color" id="ct-buttons" value="#e0517a" /><span class="hintcell">gradient end</span>
+      </div>
+      <div class="field-row">
+        <div class="field-stack"><label for="ct-name">Theme name</label></div>
+        <input type="text" id="ct-name" placeholder="Iqra's Theme" maxlength="24" style="width:170px" />
+      </div>
+      <div class="danger-zone">
+        <button class="btn btn-primary" id="ct-preview" type="button">PREVIEW</button>
+        <button class="btn btn-ghost" id="ct-save" type="button">SAVE & APPLY</button>
+      </div>
+      <div class="saved-themes" id="saved-themes"></div>
+    </section>
+
+    <!-- ================= TIMER ================= -->
+    <section class="settings-card">
+      <h2>TIMER</h2>
+      <div class="field-row"><div class="field-stack"><label for="set-focus">Focus</label></div><div><input type="number" id="set-focus" min="1" max="180" /> <span style="font-size:12px;color:var(--muted)">min</span></div></div>
+      <div class="field-row"><div class="field-stack"><label for="set-short">Short break</label></div><div><input type="number" id="set-short" min="1" max="60" /> <span style="font-size:12px;color:var(--muted)">min</span></div></div>
+      <div class="field-row"><div class="field-stack"><label for="set-long">Long break</label></div><div><input type="number" id="set-long" min="1" max="90" /> <span style="font-size:12px;color:var(--muted)">min</span></div></div>
+      <div class="field-row"><div class="field-stack"><label for="set-cycle">Sessions before long break</label></div><input type="number" id="set-cycle" min="2" max="12" /></div>
+    </section>
+
+    <!-- ================= SOUND ================= -->
+    <section class="settings-card">
+      <h2>SOUND</h2>
+      <div class="field-row">
+        <div class="field-stack"><label for="set-completion">Completion sound</label><span class="desc">when a focus session ends</span></div>
+        <div class="sound-preview">
+          <select id="set-completion">
+            <option value="chime">Refreshing Chime (C→E→G)</option>
+            <option value="softbell">Soft Bell</option>
+            <option value="glass">Glass</option>
+            <option value="raindrop">Rain Drop</option>
+            <option value="piano">Tiny Piano</option>
+            <option value="morning">Morning Chime</option>
+            <option value="custom">Custom sound…</option>
+          </select>
+          <button class="btn btn-ghost" id="preview-completion" type="button" aria-label="Preview completion sound">▶</button>
+        </div>
+      </div>
+      <div class="field-row" id="custom-sound-row" hidden>
+        <div class="field-stack"><label for="set-customfile">Custom audio</label><span class="desc">.mp3 / .wav · stored locally, max ~2 MB</span></div>
+        <input type="file" id="set-customfile" accept="audio/*" style="max-width:190px;font-size:11px" />
+      </div>
+      <div class="field-row">
+        <div class="field-stack"><label for="set-reminder">Reminder sound</label><span class="desc">Focus Monitor nudges</span></div>
+        <select id="set-reminder">
+          <option value="gentle">Gentle Alert</option>
+          <option value="weird">Weird Alert 🔔</option>
+          <option value="custom">Custom sound…</option>
+        </select>
+      </div>
+      <div class="field-row">
+        <div class="field-stack"><label for="set-volume">Volume</label></div>
+        <input type="range" id="set-volume" min="0" max="100" step="5" />
+      </div>
+      <div class="field-row"><label>Timer complete 🔔</label><span class="toggle"><input type="checkbox" id="tg-complete" /><span class="track"></span></span></div>
+      <div class="field-row"><label>Break complete 🔔</label><span class="toggle"><input type="checkbox" id="tg-break" /><span class="track"></span></span></div>
+      <div class="field-row"><label>Inactivity reminder 🔔</label><span class="toggle"><input type="checkbox" id="tg-inactivity" /><span class="track"></span></span></div>
+      <div class="field-row"><label>Tab blocked 🔔</label><span class="toggle"><input type="checkbox" id="tg-blocked" /><span class="track"></span></span></div>
+      <div class="field-row">
+        <label>"Hey. Focus." voice<span class="desc">Spoken reminder on strong nudges</span></label>
+        <span class="toggle"><input type="checkbox" id="tg-voice" /><span class="track"></span></span>
+      </div>
+    </section>
+
+    <!-- ================= FOCUS MONITOR ================= -->
+    <section class="settings-card">
+      <h2>FOCUS MONITOR</h2>
+      <div class="field-row"><label>Inactivity monitor<span class="desc">Tracks mouse, keys, scroll, touch</span></label><span class="toggle"><input type="checkbox" id="tg-monitor" /><span class="track"></span></span></div>
+      <div class="field-row"><div class="field-stack"><label for="set-soft">Soft visual reminder after</label><span class="desc">Gentle banner — nothing loud</span></div><div><input type="number" id="set-soft" min="30" max="600" /> <span style="font-size:12px;color:var(--muted)">sec</span></div></div>
+      <div class="field-row"><div class="field-stack"><label for="set-soundsec">Sound reminder after</label></div><div><input type="number" id="set-soundsec" min="40" max="900" /> <span style="font-size:12px;color:var(--muted)">sec</span></div></div>
+      <div class="field-row"><div class="field-stack"><label for="set-strongsec">Strong reminder after</label><span class="desc">The loud one + voice</span></div><div><input type="number" id="set-strongsec" min="50" max="1800" /> <span style="font-size:12px;color:var(--muted)">sec</span></div></div>
+      <div class="field-row">
+        <label>Reading mode<span class="desc">Ignore input inactivity — only tab violations</span></label>
+        <span class="toggle"><input type="checkbox" id="tg-reading" /><span class="track"></span></span>
+      </div>
+    </section>
+
+    <!-- ================= STUDY LOCK ================= -->
+    <section class="settings-card">
+      <h2>🔒 STUDY LOCK</h2>
+      <div class="field-row">
+        <div class="field-stack"><label for="set-lockmode">Mode</label><span class="desc">Needs the companion browser extension</span></div>
+        <select id="set-lockmode">
+          <option value="off">Off</option>
+          <option value="gentle">Gentle — warn only</option>
+          <option value="strict">Strict — auto redirect</option>
+          <option value="hardcore">Hardcore — no escape</option>
+        </select>
+      </div>
+      <div class="field-row">
+        <div class="field-stack"><label for="set-grace">Grace period</label><span class="desc">Seconds at session start when nothing is blocked</span></div>
+        <div><input type="number" id="set-grace" min="0" max="60" /> <span style="font-size:12px;color:var(--muted)">sec</span></div>
+      </div>
+      <div class="field-row">
+        <label>Block tab switching<span class="desc">Count tab switches as violations</span></label>
+        <span class="toggle"><input type="checkbox" id="tg-tabswitch" /><span class="track"></span></span>
+      </div>
+
+      <div class="field-row" style="border-top:1px dashed var(--border-soft);padding-top:14px">
+        <div class="field-stack"><label>STUDY ALLOWLIST</label><span class="desc">Everything else gets blocked during a locked session</span></div>
+      </div>
+      <div class="list-editor">
+        <div class="add-row"><input type="text" id="allow-input" placeholder="example.com" /><button class="btn btn-primary" id="allow-add" type="button">+ Add</button></div>
+        <ul class="site-list allow" id="allow-list"></ul>
+      </div>
+
+      <div class="field-row" style="margin-top:16px">
+        <div class="field-stack"><label>DISTRACTIONS</label><span class="desc">Your usual suspects — highlighted when matched</span></div>
+      </div>
+      <div class="list-editor">
+        <div class="add-row"><input type="text" id="deny-input" placeholder="youtube.com" /><button class="btn btn-primary" id="deny-add" type="button">+ Add</button></div>
+        <ul class="site-list deny" id="deny-list"></ul>
+      </div>
+
+      <div class="field-row" style="margin-top:16px">
+        <div class="field-stack">
+          <label for="set-extid">Extension bridge</label>
+          <span class="desc">Paste the extension ID once (chrome://extensions → My Study Timer) so START FOCUS arms the lock</span>
+        </div>
+        <div class="field-stack" style="align-items:flex-end">
+          <input type="text" id="set-extid" placeholder="abcdefghijklmnop…" style="width:220px;font-family:var(--font-clock);font-size:11.5px" />
+          <div style="display:flex;gap:8px;margin-top:6px">
+            <button class="btn btn-ghost" id="ext-test" type="button" style="padding:7px 14px;font-size:11px">TEST</button>
+          </div>
+          <span class="bridge-status" id="ext-status"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= BEHAVIOR ================= -->
+    <section class="settings-card">
+      <h2>BEHAVIOR</h2>
+      <div class="field-row"><label>Auto-start breaks</label><span class="toggle"><input type="checkbox" id="tg-autobreak" /><span class="track"></span></span></div>
+      <div class="field-row"><label>Auto-start focus</label><span class="toggle"><input type="checkbox" id="tg-autofocus" /><span class="track"></span></span></div>
+      <div class="field-row"><label>Notifications<span class="desc">Desktop notifications on phase changes</span></label><span class="toggle"><input type="checkbox" id="tg-notifications" /><span class="track"></span></span></div>
+    </section>
+
+    <!-- ================= DATA ================= -->
+    <section class="settings-card">
+      <h2>DATA</h2>
+      <p class="sub" style="font-size:12.5px;color:var(--muted);margin-bottom:12px;text-align:left;line-height:1.6">
+        Everything is stored locally in your browser (localStorage). Nothing is uploaded anywhere.
+        Export a backup before clearing your browser data.
+      </p>
+      <div class="danger-zone">
+        <button class="btn btn-ghost" id="data-export" type="button">⬇ Export backup</button>
+        <label class="btn btn-ghost" style="display:inline-flex;align-items:center">⬆ Import<input type="file" id="data-import" accept="application/json" hidden /></label>
+        <button class="btn btn-danger" id="data-reset" type="button">Reset everything</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer container"><p>MY STUDY TIMER · settings apply instantly · v1.0</p></footer>
+  <div class="toast" id="toast" hidden></div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/themes.js"></script>
+  <script src="js/sounds.js"></script>
+  <script src="js/settings.js"></script>
+</body>
+</html>
